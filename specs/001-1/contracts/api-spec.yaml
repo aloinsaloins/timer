@@ -1,0 +1,338 @@
+openapi: 3.0.3
+info:
+  title: Parent Time Visualization Timer API
+  description: API for calculating and managing remaining time with parents based on life expectancy
+  version: 1.0.0
+  contact:
+    name: API Support
+    email: support@example.com
+
+servers:
+  - url: http://localhost:3000/api
+    description: Development server
+  - url: https://api.parenttime.app/api
+    description: Production server
+
+paths:
+  /calculate:
+    post:
+      summary: Calculate remaining time with parent
+      description: Performs calculation based on parent age, visitation pattern, and preferences
+      operationId: calculateRemainingTime
+      tags:
+        - Calculation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CalculationRequest'
+      responses:
+        '200':
+          description: Calculation successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalculationResponse'
+        '400':
+          description: Invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /life-expectancy:
+    get:
+      summary: Get life expectancy data
+      description: Returns Japanese life expectancy statistics
+      operationId: getLifeExpectancy
+      tags:
+        - Reference Data
+      parameters:
+        - name: year
+          in: query
+          description: Year of statistics (default current year)
+          schema:
+            type: integer
+            minimum: 2020
+            maximum: 2030
+        - name: gender
+          in: query
+          description: Gender for statistics
+          required: true
+          schema:
+            type: string
+            enum: [male, female]
+      responses:
+        '200':
+          description: Life expectancy data retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LifeExpectancyResponse'
+        '400':
+          description: Invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Data not found for specified year
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /preferences:
+    get:
+      summary: Get user preferences
+      description: Retrieves saved user preferences
+      operationId: getPreferences
+      tags:
+        - User Settings
+      parameters:
+        - name: userId
+          in: query
+          description: User identifier (optional for MVP)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Preferences retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPreferences'
+        '404':
+          description: No preferences found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    post:
+      summary: Save user preferences
+      description: Saves or updates user preferences
+      operationId: savePreferences
+      tags:
+        - User Settings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPreferences'
+      responses:
+        '200':
+          description: Preferences saved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPreferences'
+        '400':
+          description: Invalid preference data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    Parent:
+      type: object
+      required:
+        - relationship
+        - currentAge
+        - gender
+      properties:
+        relationship:
+          type: string
+          enum: [father, mother, other]
+          description: Relationship to the user
+        currentAge:
+          type: integer
+          minimum: 1
+          maximum: 150
+          description: Current age of the parent
+        gender:
+          type: string
+          enum: [male, female]
+          description: Gender for life expectancy lookup
+        customLifeExpectancy:
+          type: number
+          minimum: 1
+          maximum: 150
+          description: Optional custom life expectancy override
+
+    VisitationPattern:
+      type: object
+      required:
+        - annualDays
+        - dailyHours
+      properties:
+        annualDays:
+          type: number
+          minimum: 0
+          maximum: 365
+          description: Number of days spent together per year
+        dailyHours:
+          type: number
+          minimum: 0
+          maximum: 24
+          description: Average hours spent together per day
+        isLivingTogether:
+          type: boolean
+          default: false
+          description: Whether living with the parent
+
+    UserPreferences:
+      type: object
+      properties:
+        ageBuffer:
+          type: number
+          minimum: 0
+          maximum: 10
+          default: 0
+          description: Additional years to add to calculation
+        displayFormat:
+          type: string
+          enum: [hours_only, days_hours, years_months_days, progressive]
+          default: progressive
+          description: How to display the remaining time
+        locale:
+          type: string
+          enum: [ja, en]
+          default: en
+          description: Language preference
+        theme:
+          type: string
+          enum: [light, dark, auto]
+          default: auto
+          description: UI theme preference
+        enableReminders:
+          type: boolean
+          default: false
+          description: Whether to enable visit reminders
+        reminderFrequency:
+          type: string
+          enum: [weekly, monthly, quarterly]
+          description: How often to send reminders
+
+    CalculationRequest:
+      type: object
+      required:
+        - parent
+        - visitPattern
+      properties:
+        parent:
+          $ref: '#/components/schemas/Parent'
+        visitPattern:
+          $ref: '#/components/schemas/VisitationPattern'
+        preferences:
+          $ref: '#/components/schemas/UserPreferences'
+
+    TimeCalculation:
+      type: object
+      properties:
+        calculatedAt:
+          type: string
+          format: date-time
+        inputAge:
+          type: integer
+        inputLifeExpectancy:
+          type: number
+        inputAnnualDays:
+          type: number
+        inputDailyHours:
+          type: number
+        inputAgeBuffer:
+          type: number
+        remainingYears:
+          type: number
+          description: Years until life expectancy
+        totalRemainingDays:
+          type: number
+          description: Total days together
+        totalRemainingHours:
+          type: number
+          description: Total hours together
+        formattedOutput:
+          type: string
+          description: Human-readable formatted output
+
+    CalculationResponse:
+      type: object
+      required:
+        - success
+      properties:
+        success:
+          type: boolean
+        calculation:
+          $ref: '#/components/schemas/TimeCalculation'
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+
+    LifeExpectancyResponse:
+      type: object
+      properties:
+        year:
+          type: integer
+        gender:
+          type: string
+          enum: [male, female]
+        expectancy:
+          type: number
+          description: Life expectancy in years
+        source:
+          type: string
+          description: Data source citation
+        updatedAt:
+          type: string
+          format: date-time
+
+    ErrorResponse:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: object
+          required:
+            - code
+            - message
+          properties:
+            code:
+              type: string
+              description: Error code for client handling
+            message:
+              type: string
+              description: Human-readable error message
+            details:
+              type: object
+              description: Additional error details
+
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key for future authentication
+
+tags:
+  - name: Calculation
+    description: Time calculation operations
+  - name: Reference Data
+    description: Life expectancy and reference data
+  - name: User Settings
+    description: User preferences and settings
