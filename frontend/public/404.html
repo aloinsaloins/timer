@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404</title>
+    <meta http-equiv="refresh" content="0;url=./" />
+    <script>
+      // Fallback for SPA routing on GitHub Pages
+      // Redirect any unknown route back to the app root
+      (function() {
+        var path = location.pathname;
+        // If already at root, do nothing
+        if (path === '/' || path.endsWith('/index.html')) return;
+        // Navigate to root to let SPA router handle it
+        location.replace('./');
+      })();
+    </script>
+  </head>
+  <body></body>
+  </html>
+

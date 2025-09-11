@@ -6,7 +6,9 @@
       "Bash(scripts/setup-plan.sh:*)",
       "Bash(git checkout:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(cat:*)",
+      "Bash(scripts/check-task-prerequisites.sh:*)"
     ],
     "deny": [],
     "ask": []
