@@ -28,7 +28,6 @@
     "useCustom": "Use custom value",
     "displayFormat": "Display Format",
     "displayFormatOptions": {
-      "progressive": "Progressive",
       "hours_only": "Hours Only",
       "days_hours": "Days + Hours",
       "years_months_days": "Years, Months, Days"

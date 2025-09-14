@@ -28,7 +28,6 @@
     "useCustom": "カスタム値を使う",
     "displayFormat": "表示形式",
     "displayFormatOptions": {
-      "progressive": "段階的",
       "hours_only": "時間のみ",
       "days_hours": "日＋時間",
       "years_months_days": "年・月・日"
