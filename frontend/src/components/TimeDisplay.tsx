@@ -26,7 +26,7 @@ function formatYearsMonthsDays(remainingYears: number) {
 
 export default function TimeDisplay(props: TimeDisplayProps) {
   const { totalHours, totalDays, remainingYears, format } = props;
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   let content: React.ReactNode = null;
 
@@ -36,14 +36,14 @@ export default function TimeDisplay(props: TimeDisplayProps) {
     const { days, hours } = formatDaysHours(totalHours);
     content = (
       <div style={{ fontSize: 18, fontWeight: 600 }}>
-        {days} {i18n.language === 'ja' ? '日' : 'days'} {hours} {t('results.hours')}
+        {days} {t('results.days')} {hours} {t('results.hours')}
       </div>
     );
   } else if (format === 'years_months_days') {
     const ymd = formatYearsMonthsDays(remainingYears);
     content = (
       <div style={{ fontSize: 18, fontWeight: 600 }}>
-        {ymd.years} {t('results.years')} {ymd.months} {i18n.language === 'ja' ? 'ヶ月' : 'months'} {ymd.days} {i18n.language === 'ja' ? '日' : 'days'}
+        {ymd.years} {t('results.years')} {ymd.months} {t('results.months')} {ymd.days} {t('results.days')}
       </div>
     );
   } else {
@@ -54,14 +54,14 @@ export default function TimeDisplay(props: TimeDisplayProps) {
       const { days, hours } = formatDaysHours(totalHours);
       content = (
         <div style={{ fontSize: 18, fontWeight: 600 }}>
-          {days} {i18n.language === 'ja' ? '日' : 'days'} {hours} {t('results.hours')}
+          {days} {t('results.days')} {hours} {t('results.hours')}
         </div>
       );
     } else {
       const ymd = formatYearsMonthsDays(remainingYears);
       content = (
         <div style={{ fontSize: 18, fontWeight: 600 }}>
-          {ymd.years} {t('results.years')} {ymd.months} {i18n.language === 'ja' ? 'ヶ月' : 'months'} {ymd.days} {i18n.language === 'ja' ? '日' : 'days'}
+          {ymd.years} {t('results.years')} {ymd.months} {t('results.months')} {ymd.days} {t('results.days')}
         </div>
       );
     }
@@ -69,11 +69,12 @@ export default function TimeDisplay(props: TimeDisplayProps) {
 
   return (
     <section>
-      <h2>{i18n.language === 'ja' ? '残り時間' : 'Time Remaining'}</h2>
+      <h2>{t('results.timeRemaining')}</h2>
       <div style={{ marginTop: 8 }}>{content}</div>
       <div style={{ marginTop: 8, color: '#666', fontSize: 13 }}>
-        {i18n.language === 'ja' ? '詳細' : 'Secondary'}: {totalDays.toFixed(2)} {i18n.language === 'ja' ? '日' : 'days'} • {totalHours.toFixed(1)} {t('results.hours')}
+        {t('labels.secondary')}: {totalDays.toFixed(2)} {t('results.days')} ≈ {totalHours.toFixed(1)} {t('results.hours')}
       </div>
     </section>
   );
 }
+

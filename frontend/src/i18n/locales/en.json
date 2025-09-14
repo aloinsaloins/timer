@@ -25,15 +25,24 @@
     "ageBuffer": "Age buffer",
     "yearsUnit": "years",
     "customLifeExpectancy": "Custom life expectancy",
-    "useCustom": "Use custom value"
+    "useCustom": "Use custom value",
+    "displayFormat": "Display Format",
+    "displayFormatOptions": {
+      "progressive": "Progressive",
+      "hours_only": "Hours Only",
+      "days_hours": "Days + Hours",
+      "years_months_days": "Years, Months, Days"
+    }
   },
   "results": {
     "title": "Calculation Results",
     "remainingYears": "Remaining years",
     "totalHours": "Total hours",
     "years": "years",
+    "months": "months",
     "hours": "hours",
-    "days": "days worth",
+    "days": "days",
+    "timeRemaining": "Time Remaining",
     "noData": "Please enter data",
     "forParent": "Time with {{name}}"
   },
@@ -49,8 +58,16 @@
     "invalidDays": "Please enter valid days (0-365)",
     "invalidHours": "Please enter valid hours (0-24)"
   },
+  "labels": {
+    "lifeExpectancy": "Life Expectancy",
+    "secondary": "Secondary"
+  },
+  "footer": {
+    "source": "Source: MHLW Japan (2023). This static MVP stores preferences in your browser only."
+  },
   "language": {
     "switch": "日本語",
     "current": "English"
   }
 }
+

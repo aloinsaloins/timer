@@ -86,7 +86,7 @@ export default function App() {
         <section style={{ display: 'grid', gap: 12, padding: 16, border: '1px solid #e5e5e5', borderRadius: 8, flex: 1 }}>
         <h2 style={{ margin: 0, fontSize: 18 }}>{t('parent.title')}</h2>
         <label>
-          {i18n.language === 'ja' ? '父親 年齢' : `${t('parent.father')} ${t('parent.age')}`}:
+          {`${t('parent.father')} ${t('parent.age')}`}:
           <input
             aria-invalid={!!errors.fatherAge}
             type="number"
@@ -98,11 +98,11 @@ export default function App() {
           />
           {errors.fatherAge && <span style={{ color: '#d33', marginLeft: 8 }}>{errors.fatherAge}</span>}
           <span style={{ marginLeft: 12, color: '#666', fontSize: 13 }}>
-            {i18n.language === 'ja' ? '平均寿命' : 'Life Expectancy'} (2023): {fatherExpectancy.toFixed(2)} {t('results.years')}
+            {t('labels.lifeExpectancy')} (2023): {fatherExpectancy.toFixed(2)} {t('results.years')}
           </span>
         </label>
         <label>
-          {i18n.language === 'ja' ? '母親 年齢' : `${t('parent.mother')} ${t('parent.age')}`}:
+          {`${t('parent.mother')} ${t('parent.age')}`}:
           <input
             aria-invalid={!!errors.motherAge}
             type="number"
@@ -114,7 +114,7 @@ export default function App() {
           />
           {errors.motherAge && <span style={{ color: '#d33', marginLeft: 8 }}>{errors.motherAge}</span>}
           <span style={{ marginLeft: 12, color: '#666', fontSize: 13 }}>
-            {i18n.language === 'ja' ? '平均寿命' : 'Life Expectancy'} (2023): {motherExpectancy.toFixed(2)} {t('results.years')}
+            {t('labels.lifeExpectancy')} (2023): {motherExpectancy.toFixed(2)} {t('results.years')}
           </span>
         </label>
         <label>
@@ -200,16 +200,16 @@ export default function App() {
           <input type="number" min={0} max={10} value={prefs.ageBuffer} onChange={(e) => updateAgeBuffer(Number(e.target.value))} style={{ marginLeft: 8, width: 80 }} />
         </label>
         <label>
-          Display Format:
+          {t('settings.displayFormat')}:
           <select
             value={prefs.displayFormat}
             onChange={(e) => setPrefs(savePreferences({ displayFormat: e.target.value as UserPreferences['displayFormat'] }))}
             style={{ marginLeft: 8 }}
           >
-            <option value="progressive">Progressive</option>
-            <option value="hours_only">Hours Only</option>
-            <option value="days_hours">Days + Hours</option>
-            <option value="years_months_days">Years, Months, Days</option>
+            <option value="progressive">{t('settings.displayFormatOptions.progressive')}</option>
+            <option value="hours_only">{t('settings.displayFormatOptions.hours_only')}</option>
+            <option value="days_hours">{t('settings.displayFormatOptions.days_hours')}</option>
+            <option value="years_months_days">{t('settings.displayFormatOptions.years_months_days')}</option>
           </select>
         </label>
         {/* <div style={{ color: '#666' }}>
