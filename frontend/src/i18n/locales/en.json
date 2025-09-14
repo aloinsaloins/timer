@@ -9,9 +9,6 @@
     "mother": "Mother",
     "other": "Other",
     "age": "Age",
-    "gender": "Gender",
-    "male": "Male",
-    "female": "Female",
     "relationship": "Relationship",
     "addParent": "Add Parent",
     "removeParent": "Remove"

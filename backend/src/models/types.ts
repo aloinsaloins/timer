@@ -13,7 +13,6 @@ export interface Parent {
   id: string;
   relationship: Relationship;
   currentAge: number; // 1-150
-  gender: Gender;
   customLifeExpectancy?: number; // currentAge-150
   createdAt: Date;
   updatedAt: Date;

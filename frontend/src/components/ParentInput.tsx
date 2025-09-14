@@ -1,7 +1,7 @@
 import React from 'react';
 
 export interface ParentInputProps {
-  onSubmit?: (data: { relationship: 'father' | 'mother' | 'other'; currentAge: number; gender: 'male' | 'female' }) => void;
+  onSubmit?: (data: { relationship: 'father' | 'mother' | 'other'; currentAge: number }) => void;
 }
 
 export default function ParentInput(_props: ParentInputProps) {

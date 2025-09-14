@@ -9,17 +9,14 @@
     "mother": "母親",
     "other": "その他",
     "age": "年齢",
-    "gender": "性別",
-    "male": "男性",
-    "female": "女性",
     "relationship": "関係",
     "addParent": "親を追加",
     "removeParent": "削除"
   },
   "visitPattern": {
     "title": "訪問パターン",
-    "annualDays": "年間訪問日数",
-    "dailyHours": "1日あたりの時間",
+    "annualDays": "年間帰省日数",
+    "dailyHours": "1日のうち一緒にいる時間",
     "daysUnit": "日",
     "hoursUnit": "時間",
     "livingTogether": "同居している"
