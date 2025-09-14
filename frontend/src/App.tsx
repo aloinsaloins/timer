@@ -8,8 +8,8 @@ import TimeDisplay from './components/TimeDisplay';
 export default function App() {
   const { t, i18n } = useTranslation();
   const [prefs, setPrefs] = useState<UserPreferences>(() => getPreferences());
-  const [fatherAge, setFatherAge] = useState<number | ''>(75);
-  const [motherAge, setMotherAge] = useState<number | ''>('');
+  const [fatherAge, setFatherAge] = useState<number | ''>(60);
+  const [motherAge, setMotherAge] = useState<number | ''>(60);
   const [annualDays, setAnnualDays] = useState(10);
   const [dailyHours, setDailyHours] = useState(8);
 
