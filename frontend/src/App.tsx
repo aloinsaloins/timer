@@ -81,13 +81,33 @@ export default function App() {
           />
           {errors.age && <span style={{ color: '#d33', marginLeft: 8 }}>{errors.age}</span>}
         </label>
-        <label>
-          {t('parent.gender')}:
-          <select value={gender} onChange={(e) => setGender(e.target.value as 'male' | 'female')} style={{ marginLeft: 8 }}>
-            <option value="male">{t('parent.male')}</option>
-            <option value="female">{t('parent.female')}</option>
-          </select>
-        </label>
+        <div>
+          <div style={{ marginBottom: 6 }}>{t('parent.gender')}:</div>
+          <div style={{ display: 'flex', gap: 20 }}>
+            <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+              <input
+                type="radio"
+                name="gender"
+                value="male"
+                checked={gender === 'male'}
+                onChange={(e) => setGender(e.target.value as 'male')}
+                style={{ marginRight: 8 }}
+              />
+              <span>{t('parent.male')}</span>
+            </label>
+            <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+              <input
+                type="radio"
+                name="gender"
+                value="female"
+                checked={gender === 'female'}
+                onChange={(e) => setGender(e.target.value as 'female')}
+                style={{ marginRight: 8 }}
+              />
+              <span>{t('parent.female')}</span>
+            </label>
+          </div>
+        </div>
         <label>
           {t('visitPattern.annualDays')}:
           <input

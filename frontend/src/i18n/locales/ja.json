@@ -1,12 +1,15 @@
 {
   "app": {
-    "title": "親と過ごす時間の可視化",
+    "title": "親との残り時間の可視化",
     "subtitle": "残された時間を大切に"
   },
   "parent": {
     "title": "親の情報",
-    "father": "父親",
-    "mother": "母親",
+    "father": "父",
+    "mother": "母",
+    "male": "男性",
+    "female": "女性",
+    "gender": "性別",
     "other": "その他",
     "age": "年齢",
     "relationship": "関係",
@@ -14,9 +17,9 @@
     "removeParent": "削除"
   },
   "visitPattern": {
-    "title": "訪問パターン",
-    "annualDays": "年間帰省日数",
-    "dailyHours": "1日のうち一緒にいる時間",
+    "title": "面会パターン",
+    "annualDays": "年間の面会日数",
+    "dailyHours": "1日あたりの時間",
     "daysUnit": "日",
     "hoursUnit": "時間",
     "livingTogether": "同居している"
@@ -46,12 +49,13 @@
   },
   "validation": {
     "required": "必須項目です",
-    "invalidAge": "有効な年齢を入力してください（0-150）",
-    "invalidDays": "有効な日数を入力してください（0-365）",
-    "invalidHours": "有効な時間を入力してください（0-24）"
+    "invalidAge": "有効な年齢を入力してください (0-150)",
+    "invalidDays": "有効な日数を入力してください (0-365)",
+    "invalidHours": "有効な時間を入力してください (0-24)"
   },
   "language": {
     "switch": "English",
     "current": "日本語"
   }
 }
+
