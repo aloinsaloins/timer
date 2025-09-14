@@ -96,9 +96,6 @@ export default function App() {
             style={{ marginLeft: 8, width: 100, borderColor: errors.fatherAge ? '#d33' : undefined }}
           />
           {errors.fatherAge && <span style={{ color: '#d33', marginLeft: 8 }}>{errors.fatherAge}</span>}
-          <span style={{ marginLeft: 12, color: '#666', fontSize: 13 }}>
-            {i18n.language === 'ja' ? '平均寿命' : 'Life Expectancy'} (2023): {fatherExpectancy.toFixed(2)} {t('results.years')}
-          </span>
         </label>
         <label>
           {i18n.language === 'ja' ? '母親 年齢' : `${t('parent.mother')} ${t('parent.age')}`}:
@@ -112,9 +109,6 @@ export default function App() {
             style={{ marginLeft: 8, width: 100, borderColor: errors.motherAge ? '#d33' : undefined }}
           />
           {errors.motherAge && <span style={{ color: '#d33', marginLeft: 8 }}>{errors.motherAge}</span>}
-          <span style={{ marginLeft: 12, color: '#666', fontSize: 13 }}>
-            {i18n.language === 'ja' ? '平均寿命' : 'Life Expectancy'} (2023): {motherExpectancy.toFixed(2)} {t('results.years')}
-          </span>
         </label>
         <label>
           {t('visitPattern.annualDays')}:
@@ -165,11 +159,11 @@ export default function App() {
             <option value="years_months_days">Years, Months, Days</option>
           </select>
         </label>
-        {/* <div style={{ color: '#666' }}>
+        <div style={{ color: '#666' }}>
           {i18n.language === 'ja' ? '平均寿命' : 'Life Expectancy'} (2023):
           {t('parent.father')} 81.09 {t('results.years')},
           {t('parent.mother')} 87.14 {t('results.years')}
-        </div> */}
+        </div>
       </section>
 
       <section style={{ padding: 16, border: '1px solid #e5e5e5', borderRadius: 8, marginTop: 16 }}>
@@ -227,3 +221,4 @@ export default function App() {
     </div>
   );
 }
+
