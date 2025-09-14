@@ -27,10 +27,10 @@ export default function App() {
       gender: 'male',
       annualDays,
       dailyHours,
-      ageBuffer: prefs.ageBuffer,
+      ageBuffer: prefs.ageBufferFather,
       lifeExpectancy: fatherExpectancy
     });
-  }, [fatherAge, annualDays, dailyHours, prefs.ageBuffer, fatherExpectancy]);
+  }, [fatherAge, annualDays, dailyHours, prefs.ageBufferFather, fatherExpectancy]);
 
   const motherResult = useMemo(() => {
     if (motherAge === '' || !Number.isFinite(Number(motherAge))) return null;
@@ -39,14 +39,18 @@ export default function App() {
       gender: 'female',
       annualDays,
       dailyHours,
-      ageBuffer: prefs.ageBuffer,
+      ageBuffer: prefs.ageBufferMother,
       lifeExpectancy: motherExpectancy
     });
-  }, [motherAge, annualDays, dailyHours, prefs.ageBuffer, motherExpectancy]);
+  }, [motherAge, annualDays, dailyHours, prefs.ageBufferMother, motherExpectancy]);
 
-  function updateAgeBuffer(next: number) {
-    const clamped = Math.max(0, Math.min(50, Math.round(next)));
-    const updated = savePreferences({ ageBuffer: clamped });
+  function updateAgeBufferFather(next: number) {
+    const updated = savePreferences({ ageBufferFather: next });
+    setPrefs(updated);
+  }
+
+  function updateAgeBufferMother(next: number) {
+    const updated = savePreferences({ ageBufferMother: next });
     setPrefs(updated);
   }
 
@@ -100,6 +104,19 @@ export default function App() {
           <span style={{ marginLeft: 12, color: '#666', fontSize: 13 }}>
             {t('labels.lifeExpectancy')} (2023): {fatherExpectancy.toFixed(2)} {t('results.years')}
           </span>
+          <div style={{ marginTop: 8 }}>
+            <span>{`${t('parent.father')} ${t('settings.ageBuffer')}`} ({t('settings.yearsUnit')}):</span>
+            <input
+              type="number"
+              min={0}
+              max={50}
+              step={1}
+              value={prefs.ageBufferFather}
+              onChange={(e) => updateAgeBufferFather(Number(e.target.value))}
+              style={{ marginLeft: 8, width: 80 }}
+            />
+            <div style={{ marginTop: 6, color: '#666', fontSize: 13 }}>{t('settings.ageBufferHelp')}</div>
+          </div>
         </label>
         <label>
           {`${t('parent.mother')} ${t('parent.age')}`}:
@@ -116,6 +133,19 @@ export default function App() {
           <span style={{ marginLeft: 12, color: '#666', fontSize: 13 }}>
             {t('labels.lifeExpectancy')} (2023): {motherExpectancy.toFixed(2)} {t('results.years')}
           </span>
+          <div style={{ marginTop: 8 }}>
+            <span>{`${t('parent.mother')} ${t('settings.ageBuffer')}`} ({t('settings.yearsUnit')}):</span>
+            <input
+              type="number"
+              min={0}
+              max={50}
+              step={1}
+              value={prefs.ageBufferMother}
+              onChange={(e) => updateAgeBufferMother(Number(e.target.value))}
+              style={{ marginLeft: 8, width: 80 }}
+            />
+            <div style={{ marginTop: 6, color: '#666', fontSize: 13 }}>{t('settings.ageBufferHelp')}</div>
+          </div>
         </label>
         <label>
           {t('visitPattern.annualDays')}:
@@ -195,19 +225,6 @@ export default function App() {
 
       <section style={{ display: 'grid', gap: 12, padding: 16, border: '1px solid #e5e5e5', borderRadius: 8, marginTop: 16 }}>
         <h2 style={{ margin: 0, fontSize: 18 }}>{t('settings.title')}</h2>
-        <label>
-          {t('settings.ageBuffer')} ({t('settings.yearsUnit')}):
-          <input
-            type="number"
-            min={0}
-            max={50}
-            step={1}
-            value={prefs.ageBuffer}
-            onChange={(e) => updateAgeBuffer(Number(e.target.value))}
-            style={{ marginLeft: 8, width: 80 }}
-          />
-          <div style={{ marginTop: 6, color: '#666', fontSize: 13 }}>{t('settings.ageBufferHelp')}</div>
-        </label>
         <label>
           {t('settings.displayFormat')}:
           <select
