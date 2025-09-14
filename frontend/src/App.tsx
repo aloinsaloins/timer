@@ -20,6 +20,39 @@ export default function App() {
   const fatherExpectancy = useMemo(() => getLifeExpectancy('male', 2023), []);
   const motherExpectancy = useMemo(() => getLifeExpectancy('female', 2023), []);
 
+  // Auto-apply buffer when age >= life expectancy: buffer = (age - expectancy) + 1 (floored exceed + 1)
+  useEffect(() => {
+    if (fatherAge === '' || !Number.isFinite(Number(fatherAge))) return;
+    const ageNum = Number(fatherAge);
+    const exceed = ageNum - fatherExpectancy;
+    if (exceed >= 0) {
+      const autoBuffer = Math.floor(exceed) + 1;
+      if (autoBuffer > 0 && autoBuffer !== prefs.ageBufferFather) {
+        setPrefs(savePreferences({ ageBufferFather: autoBuffer }));
+      }
+    } else {
+      if (prefs.ageBufferFather !== 0) {
+        setPrefs(savePreferences({ ageBufferFather: 0 }));
+      }
+    }
+  }, [fatherAge, fatherExpectancy, prefs.ageBufferFather]);
+
+  useEffect(() => {
+    if (motherAge === '' || !Number.isFinite(Number(motherAge))) return;
+    const ageNum = Number(motherAge);
+    const exceed = ageNum - motherExpectancy;
+    if (exceed >= 0) {
+      const autoBuffer = Math.floor(exceed) + 1;
+      if (autoBuffer > 0 && autoBuffer !== prefs.ageBufferMother) {
+        setPrefs(savePreferences({ ageBufferMother: autoBuffer }));
+      }
+    } else {
+      if (prefs.ageBufferMother !== 0) {
+        setPrefs(savePreferences({ ageBufferMother: 0 }));
+      }
+    }
+  }, [motherAge, motherExpectancy, prefs.ageBufferMother]);
+
   const fatherResult = useMemo(() => {
     if (fatherAge === '' || !Number.isFinite(Number(fatherAge))) return null;
     return calculateRemainingTime({
