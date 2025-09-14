@@ -85,7 +85,7 @@ export default function App() {
       <section style={{ display: 'grid', gap: 12, padding: 16, border: '1px solid #e5e5e5', borderRadius: 8, marginTop: 16 }}>
         <h2 style={{ margin: 0, fontSize: 18 }}>{t('parent.title')}</h2>
         <label>
-          {t('parent.father')} {t('parent.age')}:
+          {i18n.language === 'ja' ? '父親 年齢' : `${t('parent.father')} ${t('parent.age')}`}:
           <input
             aria-invalid={!!errors.fatherAge}
             type="number"
@@ -98,7 +98,7 @@ export default function App() {
           {errors.fatherAge && <span style={{ color: '#d33', marginLeft: 8 }}>{errors.fatherAge}</span>}
         </label>
         <label>
-          {t('parent.mother')} {t('parent.age')}:
+          {i18n.language === 'ja' ? '母親 年齢' : `${t('parent.mother')} ${t('parent.age')}`}:
           <input
             aria-invalid={!!errors.motherAge}
             type="number"
