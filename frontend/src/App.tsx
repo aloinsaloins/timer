@@ -211,9 +211,7 @@ export default function App() {
                   <div style={{ color: '#666', marginBottom: 6, fontWeight: 'bold' }}>
                     {t('parent.father')}:
                   </div>
-                  <div style={{ color: '#666', marginBottom: 6 }}>
-                    {t('results.remainingYears')}: {fatherResult.remainingYears.toFixed(2)} {t('results.years')}
-                  </div>
+                  {/* Removed explicit remaining years display as requested */}
                   <TimeDisplay
                     remainingYears={fatherResult.remainingYears}
                     totalDays={fatherResult.totalRemainingDays}
@@ -227,9 +225,7 @@ export default function App() {
                   <div style={{ color: '#666', marginBottom: 6, fontWeight: 'bold' }}>
                     {t('parent.mother')}:
                   </div>
-                  <div style={{ color: '#666', marginBottom: 6 }}>
-                    {t('results.remainingYears')}: {motherResult.remainingYears.toFixed(2)} {t('results.years')}
-                  </div>
+                  {/* Removed explicit remaining years display as requested */}
                   <TimeDisplay
                     remainingYears={motherResult.remainingYears}
                     totalDays={motherResult.totalRemainingDays}
