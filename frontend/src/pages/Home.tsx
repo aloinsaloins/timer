@@ -7,9 +7,15 @@ import Settings from '../components/Settings';
 export default function Home() {
   return (
     <main>
-      <ParentInput />
+      <div style={{ display: 'flex', gap: '2rem', marginBottom: '2rem' }}>
+        <div style={{ flex: 1 }}>
+          <ParentInput />
+        </div>
+        <div style={{ flex: 1 }}>
+          <TimeDisplay />
+        </div>
+      </div>
       <VisitPatternInput />
-      <TimeDisplay />
       <Settings />
     </main>
   );
