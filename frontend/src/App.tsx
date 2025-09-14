@@ -128,7 +128,7 @@ export default function App() {
             {t('labels.lifeExpectancy')} (2023): {fatherExpectancy.toFixed(2)} {t('results.years')}
           </span>
           <div style={{ marginTop: 8 }}>
-            <span>{`${t('parent.father')} ${t('settings.ageBuffer')}`} ({t('settings.yearsUnit')}):</span>
+            <span>{`${t('parent.father')} ${t('settings.ageBuffer')}`}</span>
             <input
               type="number"
               min={0}
@@ -157,7 +157,7 @@ export default function App() {
             {t('labels.lifeExpectancy')} (2023): {motherExpectancy.toFixed(2)} {t('results.years')}
           </span>
           <div style={{ marginTop: 8 }}>
-            <span>{`${t('parent.mother')} ${t('settings.ageBuffer')}`} ({t('settings.yearsUnit')}):</span>
+            <span>{`${t('parent.mother')} ${t('settings.ageBuffer')}`}</span>
             <input
               type="number"
               min={0}
