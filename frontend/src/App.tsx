@@ -82,7 +82,8 @@ export default function App() {
       </div>
       <p style={{ color: '#555', marginTop: 0 }}>{t('app.subtitle')}</p>
 
-      <section style={{ display: 'grid', gap: 12, padding: 16, border: '1px solid #e5e5e5', borderRadius: 8, marginTop: 16 }}>
+      <div style={{ display: 'flex', gap: 16, marginTop: 16, alignItems: 'stretch' }}>
+        <section style={{ display: 'grid', gap: 12, padding: 16, border: '1px solid #e5e5e5', borderRadius: 8, flex: 1 }}>
         <h2 style={{ margin: 0, fontSize: 18 }}>{t('parent.title')}</h2>
         <label>
           {i18n.language === 'ja' ? '父親 年齢' : `${t('parent.father')} ${t('parent.age')}`}:
@@ -146,6 +147,52 @@ export default function App() {
         </label>
       </section>
 
+        <section style={{ padding: 16, border: '1px solid #e5e5e5', borderRadius: 8, flex: 1 }}>
+          <h2 style={{ margin: 0, fontSize: 18 }}>{t('results.title')}</h2>
+          {errors.annualDays || errors.dailyHours ? (
+            <div style={{ marginTop: 8, color: '#d33' }}>{t('results.noData')}</div>
+          ) : (
+            <div style={{ marginTop: 8 }}>
+              {fatherResult && (
+                <div style={{ marginBottom: 16 }}>
+                  <div style={{ color: '#666', marginBottom: 6, fontWeight: 'bold' }}>
+                    {t('parent.father')}:
+                  </div>
+                  <div style={{ color: '#666', marginBottom: 6 }}>
+                    {t('results.remainingYears')}: {fatherResult.remainingYears.toFixed(2)} {t('results.years')}
+                  </div>
+                  <TimeDisplay
+                    remainingYears={fatherResult.remainingYears}
+                    totalDays={fatherResult.totalRemainingDays}
+                    totalHours={fatherResult.totalRemainingHours}
+                    format={prefs.displayFormat}
+                  />
+                </div>
+              )}
+              {motherResult && (
+                <div>
+                  <div style={{ color: '#666', marginBottom: 6, fontWeight: 'bold' }}>
+                    {t('parent.mother')}:
+                  </div>
+                  <div style={{ color: '#666', marginBottom: 6 }}>
+                    {t('results.remainingYears')}: {motherResult.remainingYears.toFixed(2)} {t('results.years')}
+                  </div>
+                  <TimeDisplay
+                    remainingYears={motherResult.remainingYears}
+                    totalDays={motherResult.totalRemainingDays}
+                    totalHours={motherResult.totalRemainingHours}
+                    format={prefs.displayFormat}
+                  />
+                </div>
+              )}
+              {!fatherResult && !motherResult && (
+                <div style={{ color: '#999' }}>{t('results.noData')}</div>
+              )}
+            </div>
+          )}
+        </section>
+      </div>
+
       <section style={{ display: 'grid', gap: 12, padding: 16, border: '1px solid #e5e5e5', borderRadius: 8, marginTop: 16 }}>
         <h2 style={{ margin: 0, fontSize: 18 }}>{t('settings.title')}</h2>
         <label>
@@ -172,50 +219,7 @@ export default function App() {
         </div> */}
       </section>
 
-      <section style={{ padding: 16, border: '1px solid #e5e5e5', borderRadius: 8, marginTop: 16 }}>
-        <h2 style={{ margin: 0, fontSize: 18 }}>{t('results.title')}</h2>
-        {errors.annualDays || errors.dailyHours ? (
-          <div style={{ marginTop: 8, color: '#d33' }}>{t('results.noData')}</div>
-        ) : (
-          <div style={{ marginTop: 8 }}>
-            {fatherResult && (
-              <div style={{ marginBottom: 16 }}>
-                <div style={{ color: '#666', marginBottom: 6, fontWeight: 'bold' }}>
-                  {t('parent.father')}:
-                </div>
-                <div style={{ color: '#666', marginBottom: 6 }}>
-                  {t('results.remainingYears')}: {fatherResult.remainingYears.toFixed(2)} {t('results.years')}
-                </div>
-                <TimeDisplay
-                  remainingYears={fatherResult.remainingYears}
-                  totalDays={fatherResult.totalRemainingDays}
-                  totalHours={fatherResult.totalRemainingHours}
-                  format={prefs.displayFormat}
-                />
-              </div>
-            )}
-            {motherResult && (
-              <div>
-                <div style={{ color: '#666', marginBottom: 6, fontWeight: 'bold' }}>
-                  {t('parent.mother')}:
-                </div>
-                <div style={{ color: '#666', marginBottom: 6 }}>
-                  {t('results.remainingYears')}: {motherResult.remainingYears.toFixed(2)} {t('results.years')}
-                </div>
-                <TimeDisplay
-                  remainingYears={motherResult.remainingYears}
-                  totalDays={motherResult.totalRemainingDays}
-                  totalHours={motherResult.totalRemainingHours}
-                  format={prefs.displayFormat}
-                />
-              </div>
-            )}
-            {!fatherResult && !motherResult && (
-              <div style={{ color: '#999' }}>{t('results.noData')}</div>
-            )}
-          </div>
-        )}
-      </section>
+      
 
       <footer style={{ marginTop: 24, color: '#777' }}>
         <small>
