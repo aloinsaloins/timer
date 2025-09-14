@@ -206,7 +206,6 @@ export default function App() {
             onChange={(e) => setPrefs(savePreferences({ displayFormat: e.target.value as UserPreferences['displayFormat'] }))}
             style={{ marginLeft: 8 }}
           >
-            <option value="progressive">{t('settings.displayFormatOptions.progressive')}</option>
             <option value="hours_only">{t('settings.displayFormatOptions.hours_only')}</option>
             <option value="days_hours">{t('settings.displayFormatOptions.days_hours')}</option>
             <option value="years_months_days">{t('settings.displayFormatOptions.years_months_days')}</option>

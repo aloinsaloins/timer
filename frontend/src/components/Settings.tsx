@@ -1,7 +1,7 @@
 import React from 'react';
 
 export interface SettingsProps {
-  onChange?: (data: { ageBuffer: number; displayFormat: 'hours_only' | 'days_hours' | 'years_months_days' | 'progressive'; locale: 'ja' | 'en' }) => void;
+  onChange?: (data: { ageBuffer: number; displayFormat: 'hours_only' | 'days_hours' | 'years_months_days'; locale: 'ja' | 'en' }) => void;
 }
 
 export default function Settings(_props: SettingsProps) {
@@ -12,4 +12,3 @@ export default function Settings(_props: SettingsProps) {
     </section>
   );
 }
-

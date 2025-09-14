@@ -5,8 +5,7 @@ export type Gender = 'male' | 'female';
 export enum DisplayFormat {
   HOURS_ONLY = 'hours_only',
   DAYS_HOURS = 'days_hours',
-  YEARS_MONTHS_DAYS = 'years_months_days',
-  PROGRESSIVE = 'progressive'
+  YEARS_MONTHS_DAYS = 'years_months_days'
 }
 
 export interface Parent {
@@ -81,4 +80,3 @@ export interface CalculationResponse {
     message: string;
   };
 }
-

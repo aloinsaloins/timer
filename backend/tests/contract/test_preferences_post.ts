@@ -6,7 +6,7 @@ describe('Contract: POST /api/preferences', () => {
     const payload = {
       ageBuffer: 0,
       useCustomLifeExpectancy: false,
-      displayFormat: 'progressive',
+      displayFormat: 'days_hours',
       locale: 'en',
       theme: 'auto',
       enableReminders: false
@@ -16,4 +16,3 @@ describe('Contract: POST /api/preferences', () => {
     expect(res.body).toMatchObject(payload);
   });
 });
-
