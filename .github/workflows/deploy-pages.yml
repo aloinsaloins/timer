@@ -32,12 +32,12 @@ jobs:
         with:
           node-version: 20
 
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-        # Only enable/create the Pages site from the default branch
+      # Optional: configure Pages. Some repos/orgs block API enablement.
+      # If this step fails with permissions, Pages must be enabled manually in Settings.
+      - name: Configure Pages (optional)
         if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
-        with:
-          enablement: true
+        uses: actions/configure-pages@v5
+        continue-on-error: true
 
       - name: Install dependencies
         run: |
@@ -58,6 +58,8 @@ jobs:
     name: Deploy to Pages
     needs: build
     runs-on: ubuntu-latest
+    # Only deploy from the default branch to avoid 404s before Pages is enabled
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
