@@ -1,6 +1,0 @@
-Library: time-calculator
-Purpose: Core calculation logic for remaining time with parents.
-Inputs: age, gender, annualDays, dailyHours, ageBuffer, lifeExpectancy(optional)
-Outputs: remainingYears, totalRemainingDays, totalRemainingHours
-Notes: Follow data-model.md calculation rules.
-

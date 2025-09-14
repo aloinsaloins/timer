@@ -1,6 +1,0 @@
-Library: life-expectancy
-Purpose: Provide Japanese life expectancy (MHLW 2023+) by gender/year.
-Inputs: gender (male|female), year (default 2023)
-Outputs: expectancy (years)
-Notes: Use LIFE_EXPECTANCY_2023 constants initially; extendable to more years.
-
