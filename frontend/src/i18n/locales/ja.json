@@ -14,8 +14,8 @@
   },
   "visitPattern": {
     "title": "面会パターン",
-    "annualDays": "年間の面会日数",
-    "dailyHours": "1日あたりの時間",
+    "annualDays": "年間帰省日数",
+    "dailyHours": "1日に一緒に過ごす時間",
     "daysUnit": "日",
     "hoursUnit": "時間",
     "livingTogether": "同居している"
