@@ -8,8 +8,8 @@ import TimeDisplay from './components/TimeDisplay';
 export default function App() {
   const { t, i18n } = useTranslation();
   const [prefs, setPrefs] = useState<UserPreferences>(() => getPreferences());
-  const [age, setAge] = useState(75);
-  const [gender, setGender] = useState<'male' | 'female'>('male');
+  const [fatherAge, setFatherAge] = useState<number | ''>(75);
+  const [motherAge, setMotherAge] = useState<number | ''>('');
   const [annualDays, setAnnualDays] = useState(10);
   const [dailyHours, setDailyHours] = useState(8);
 
@@ -17,17 +17,32 @@ export default function App() {
     setPrefs(getPreferences());
   }, []);
 
-  const expectancy = useMemo(() => getLifeExpectancy(gender, 2023), [gender]);
-  const result = useMemo(() => {
+  const fatherExpectancy = useMemo(() => getLifeExpectancy('male', 2023), []);
+  const motherExpectancy = useMemo(() => getLifeExpectancy('female', 2023), []);
+
+  const fatherResult = useMemo(() => {
+    if (fatherAge === '' || !Number.isFinite(Number(fatherAge))) return null;
     return calculateRemainingTime({
-      age,
-      gender,
+      age: Number(fatherAge),
+      gender: 'male',
       annualDays,
       dailyHours,
       ageBuffer: prefs.ageBuffer,
-      lifeExpectancy: expectancy
+      lifeExpectancy: fatherExpectancy
     });
-  }, [age, gender, annualDays, dailyHours, prefs.ageBuffer, expectancy]);
+  }, [fatherAge, annualDays, dailyHours, prefs.ageBuffer, fatherExpectancy]);
+
+  const motherResult = useMemo(() => {
+    if (motherAge === '' || !Number.isFinite(Number(motherAge))) return null;
+    return calculateRemainingTime({
+      age: Number(motherAge),
+      gender: 'female',
+      annualDays,
+      dailyHours,
+      ageBuffer: prefs.ageBuffer,
+      lifeExpectancy: motherExpectancy
+    });
+  }, [motherAge, annualDays, dailyHours, prefs.ageBuffer, motherExpectancy]);
 
   function updateAgeBuffer(next: number) {
     const clamped = Math.max(0, Math.min(10, Math.round(next)));
@@ -42,7 +57,8 @@ export default function App() {
 
   // Simple input validation
   const errors = {
-    age: age < 1 || age > 150 || !Number.isFinite(age) ? t('validation.invalidAge') : '',
+    fatherAge: fatherAge !== '' && (Number(fatherAge) < 1 || Number(fatherAge) > 150 || !Number.isFinite(Number(fatherAge))) ? t('validation.invalidAge') : '',
+    motherAge: motherAge !== '' && (Number(motherAge) < 1 || Number(motherAge) > 150 || !Number.isFinite(Number(motherAge))) ? t('validation.invalidAge') : '',
     annualDays: annualDays < 0 || annualDays > 365 || !Number.isFinite(annualDays) ? t('validation.invalidDays') : '',
     dailyHours: dailyHours < 0 || dailyHours > 24 || !Number.isFinite(dailyHours) ? t('validation.invalidHours') : ''
   } as const;
@@ -69,45 +85,31 @@ export default function App() {
       <section style={{ display: 'grid', gap: 12, padding: 16, border: '1px solid #e5e5e5', borderRadius: 8, marginTop: 16 }}>
         <h2 style={{ margin: 0, fontSize: 18 }}>{t('parent.title')}</h2>
         <label>
-          {t('parent.age')}:
+          {t('parent.father')} {t('parent.age')}:
           <input
-            aria-invalid={!!errors.age}
+            aria-invalid={!!errors.fatherAge}
             type="number"
             min={1}
             max={150}
-            value={age}
-            onChange={(e) => setAge(Math.trunc(Number(e.target.value)))}
-            style={{ marginLeft: 8, width: 100, borderColor: errors.age ? '#d33' : undefined }}
+            value={fatherAge}
+            onChange={(e) => setFatherAge(e.target.value === '' ? '' : Math.trunc(Number(e.target.value)))}
+            style={{ marginLeft: 8, width: 100, borderColor: errors.fatherAge ? '#d33' : undefined }}
           />
-          {errors.age && <span style={{ color: '#d33', marginLeft: 8 }}>{errors.age}</span>}
+          {errors.fatherAge && <span style={{ color: '#d33', marginLeft: 8 }}>{errors.fatherAge}</span>}
         </label>
-        <div>
-          <div style={{ marginBottom: 6 }}>{t('parent.gender')}:</div>
-          <div style={{ display: 'flex', gap: 20 }}>
-            <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
-              <input
-                type="radio"
-                name="gender"
-                value="male"
-                checked={gender === 'male'}
-                onChange={(e) => setGender(e.target.value as 'male')}
-                style={{ marginRight: 8 }}
-              />
-              <span>{t('parent.male')}</span>
-            </label>
-            <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
-              <input
-                type="radio"
-                name="gender"
-                value="female"
-                checked={gender === 'female'}
-                onChange={(e) => setGender(e.target.value as 'female')}
-                style={{ marginRight: 8 }}
-              />
-              <span>{t('parent.female')}</span>
-            </label>
-          </div>
-        </div>
+        <label>
+          {t('parent.mother')} {t('parent.age')}:
+          <input
+            aria-invalid={!!errors.motherAge}
+            type="number"
+            min={1}
+            max={150}
+            value={motherAge}
+            onChange={(e) => setMotherAge(e.target.value === '' ? '' : Math.trunc(Number(e.target.value)))}
+            style={{ marginLeft: 8, width: 100, borderColor: errors.motherAge ? '#d33' : undefined }}
+          />
+          {errors.motherAge && <span style={{ color: '#d33', marginLeft: 8 }}>{errors.motherAge}</span>}
+        </label>
         <label>
           {t('visitPattern.annualDays')}:
           <input
@@ -158,25 +160,53 @@ export default function App() {
           </select>
         </label>
         <div style={{ color: '#666' }}>
-          {i18n.language === 'ja' ? '平均寿命' : 'Life Expectancy'} (2023): {gender === 'male' ? '81.09' : '87.14'} {t('results.years')}
+          {i18n.language === 'ja' ? '平均寿命' : 'Life Expectancy'} (2023):
+          {t('parent.father')} 81.09 {t('results.years')},
+          {t('parent.mother')} 87.14 {t('results.years')}
         </div>
       </section>
 
       <section style={{ padding: 16, border: '1px solid #e5e5e5', borderRadius: 8, marginTop: 16 }}>
         <h2 style={{ margin: 0, fontSize: 18 }}>{t('results.title')}</h2>
-        {errors.age || errors.annualDays || errors.dailyHours ? (
+        {errors.annualDays || errors.dailyHours ? (
           <div style={{ marginTop: 8, color: '#d33' }}>{t('results.noData')}</div>
         ) : (
           <div style={{ marginTop: 8 }}>
-            <div style={{ color: '#666', marginBottom: 6 }}>
-              {t('results.remainingYears')}: {result.remainingYears.toFixed(2)} {t('results.years')}
-            </div>
-            <TimeDisplay
-              remainingYears={result.remainingYears}
-              totalDays={result.totalRemainingDays}
-              totalHours={result.totalRemainingHours}
-              format={prefs.displayFormat}
-            />
+            {fatherResult && (
+              <div style={{ marginBottom: 16 }}>
+                <div style={{ color: '#666', marginBottom: 6, fontWeight: 'bold' }}>
+                  {t('parent.father')}:
+                </div>
+                <div style={{ color: '#666', marginBottom: 6 }}>
+                  {t('results.remainingYears')}: {fatherResult.remainingYears.toFixed(2)} {t('results.years')}
+                </div>
+                <TimeDisplay
+                  remainingYears={fatherResult.remainingYears}
+                  totalDays={fatherResult.totalRemainingDays}
+                  totalHours={fatherResult.totalRemainingHours}
+                  format={prefs.displayFormat}
+                />
+              </div>
+            )}
+            {motherResult && (
+              <div>
+                <div style={{ color: '#666', marginBottom: 6, fontWeight: 'bold' }}>
+                  {t('parent.mother')}:
+                </div>
+                <div style={{ color: '#666', marginBottom: 6 }}>
+                  {t('results.remainingYears')}: {motherResult.remainingYears.toFixed(2)} {t('results.years')}
+                </div>
+                <TimeDisplay
+                  remainingYears={motherResult.remainingYears}
+                  totalDays={motherResult.totalRemainingDays}
+                  totalHours={motherResult.totalRemainingHours}
+                  format={prefs.displayFormat}
+                />
+              </div>
+            )}
+            {!fatherResult && !motherResult && (
+              <div style={{ color: '#999' }}>{t('results.noData')}</div>
+            )}
           </div>
         )}
       </section>
