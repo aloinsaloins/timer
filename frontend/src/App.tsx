@@ -45,7 +45,7 @@ export default function App() {
   }, [motherAge, annualDays, dailyHours, prefs.ageBuffer, motherExpectancy]);
 
   function updateAgeBuffer(next: number) {
-    const clamped = Math.max(0, Math.min(10, Math.round(next)));
+    const clamped = Math.max(0, Math.min(50, Math.round(next)));
     const updated = savePreferences({ ageBuffer: clamped });
     setPrefs(updated);
   }
@@ -197,7 +197,16 @@ export default function App() {
         <h2 style={{ margin: 0, fontSize: 18 }}>{t('settings.title')}</h2>
         <label>
           {t('settings.ageBuffer')} ({t('settings.yearsUnit')}):
-          <input type="number" min={0} max={10} value={prefs.ageBuffer} onChange={(e) => updateAgeBuffer(Number(e.target.value))} style={{ marginLeft: 8, width: 80 }} />
+          <input
+            type="number"
+            min={0}
+            max={50}
+            step={1}
+            value={prefs.ageBuffer}
+            onChange={(e) => updateAgeBuffer(Number(e.target.value))}
+            style={{ marginLeft: 8, width: 80 }}
+          />
+          <div style={{ marginTop: 6, color: '#666', fontSize: 13 }}>{t('settings.ageBufferHelp')}</div>
         </label>
         <label>
           {t('settings.displayFormat')}:

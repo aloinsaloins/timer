@@ -5,7 +5,7 @@ export interface CalculateParams {
   gender: Gender;
   annualDays: number;
   dailyHours: number;
-  ageBuffer: number; // 0-10
+  ageBuffer: number; // 0-50
   lifeExpectancy?: number; // optional override
 }
 
@@ -26,4 +26,3 @@ export function calculateRemainingTime(params: CalculateParams): {
   const totalRemainingHours = totalRemainingDays * dailyHours;
   return { remainingYears, totalRemainingDays, totalRemainingHours };
 }
-

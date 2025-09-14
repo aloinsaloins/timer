@@ -22,7 +22,8 @@
   },
   "settings": {
     "title": "Settings",
-    "ageBuffer": "Age buffer",
+    "ageBuffer": "Result correction (years)",
+    "ageBufferHelp": "Empty is treated as 0. Enter an integer 0–50. Example: Base 32, correction +5 → 37",
     "yearsUnit": "years",
     "customLifeExpectancy": "Custom life expectancy",
     "useCustom": "Use custom value",
@@ -69,4 +70,3 @@
     "current": "English"
   }
 }
-

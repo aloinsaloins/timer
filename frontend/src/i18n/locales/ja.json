@@ -1,35 +1,36 @@
 {
   "app": {
-    "title": "親との残り時間の可視化",
-    "subtitle": "残された時間を大切に"
+    "title": "親との時間の可視化",
+    "subtitle": "残りの時間を大切に"
   },
   "parent": {
     "title": "親の情報",
     "father": "父",
     "mother": "母",
     "age": "年齢",
-    "relationship": "続柄",
+    "relationship": "関係",
     "addParent": "親を追加",
     "removeParent": "削除"
   },
   "visitPattern": {
-    "title": "面会パターン",
-    "annualDays": "年間の面会日数",
-    "dailyHours": "1日に会う時間",
+    "title": "訪問パターン",
+    "annualDays": "年間の訪問日数",
+    "dailyHours": "1日あたりの時間",
     "daysUnit": "日",
     "hoursUnit": "時間",
     "livingTogether": "同居している"
   },
   "settings": {
     "title": "設定",
-    "ageBuffer": "年齢バッファ",
-    "yearsUnit": "年",
+    "ageBuffer": "計算結果の補正幅（歳）",
+    "ageBufferHelp": "空欄は0として扱います。0〜50の整数で入力してください。例: 基本32歳、補正5 → 37歳",
+    "yearsUnit": "歳",
     "customLifeExpectancy": "平均寿命（カスタム）",
     "useCustom": "カスタム値を使う",
     "displayFormat": "表示形式",
     "displayFormatOptions": {
       "hours_only": "時間のみ",
-      "days_hours": "日＋時間",
+      "days_hours": "日 + 時間",
       "years_months_days": "年・月・日"
     }
   },
@@ -46,7 +47,7 @@
     "forParent": "{{name}}との時間"
   },
   "actions": {
-    "calculate": "計算する",
+    "calculate": "計算",
     "reset": "リセット",
     "save": "保存",
     "load": "読み込み"
@@ -62,7 +63,7 @@
     "secondary": "補足"
   },
   "footer": {
-    "source": "出典：厚生労働省（2023年）。このMVPはブラウザ内にのみ設定を保存します。"
+    "source": "出典: 厚生労働省 (2023年)。このMVPはブラウザ内にのみ設定を保存します。"
   },
   "language": {
     "switch": "English",

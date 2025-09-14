@@ -1,7 +1,7 @@
 export type DisplayFormat = 'hours_only' | 'days_hours' | 'years_months_days';
 
 export interface UserPreferences {
-  ageBuffer: number; // 0-10
+  ageBuffer: number; // 0-50
   displayFormat: DisplayFormat;
   locale: 'ja' | 'en';
   theme: 'light' | 'dark' | 'auto';
