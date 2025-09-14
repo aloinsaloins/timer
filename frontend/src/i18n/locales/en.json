@@ -1,0 +1,60 @@
+{
+  "app": {
+    "title": "Parent Time Visualization",
+    "subtitle": "Cherish the remaining time"
+  },
+  "parent": {
+    "title": "Parent Information",
+    "father": "Father",
+    "mother": "Mother",
+    "other": "Other",
+    "age": "Age",
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female",
+    "relationship": "Relationship",
+    "addParent": "Add Parent",
+    "removeParent": "Remove"
+  },
+  "visitPattern": {
+    "title": "Visit Pattern",
+    "annualDays": "Annual visit days",
+    "dailyHours": "Hours per day",
+    "daysUnit": "days",
+    "hoursUnit": "hours",
+    "livingTogether": "Living together"
+  },
+  "settings": {
+    "title": "Settings",
+    "ageBuffer": "Age buffer",
+    "yearsUnit": "years",
+    "customLifeExpectancy": "Custom life expectancy",
+    "useCustom": "Use custom value"
+  },
+  "results": {
+    "title": "Calculation Results",
+    "remainingYears": "Remaining years",
+    "totalHours": "Total hours",
+    "years": "years",
+    "hours": "hours",
+    "days": "days worth",
+    "noData": "Please enter data",
+    "forParent": "Time with {{name}}"
+  },
+  "actions": {
+    "calculate": "Calculate",
+    "reset": "Reset",
+    "save": "Save",
+    "load": "Load"
+  },
+  "validation": {
+    "required": "This field is required",
+    "invalidAge": "Please enter a valid age (0-150)",
+    "invalidDays": "Please enter valid days (0-365)",
+    "invalidHours": "Please enter valid hours (0-24)"
+  },
+  "language": {
+    "switch": "日本語",
+    "current": "English"
+  }
+}

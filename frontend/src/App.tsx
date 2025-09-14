@@ -1,10 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { getLifeExpectancy } from './lib/lifeExpectancy';
 import { calculateRemainingTime } from './lib/timeCalculator';
 import { getPreferences, savePreferences, type UserPreferences } from './services/prefs';
 import TimeDisplay from './components/TimeDisplay';
 
 export default function App() {
+  const { t, i18n } = useTranslation();
   const [prefs, setPrefs] = useState<UserPreferences>(() => getPreferences());
   const [age, setAge] = useState(75);
   const [gender, setGender] = useState<'male' | 'female'>('male');
@@ -33,22 +35,41 @@ export default function App() {
     setPrefs(updated);
   }
 
+  const toggleLanguage = () => {
+    const nextLang = i18n.language === 'ja' ? 'en' : 'ja';
+    i18n.changeLanguage(nextLang);
+  };
+
   // Simple input validation
   const errors = {
-    age: age < 1 || age > 150 || !Number.isFinite(age) ? 'Age must be between 1 and 150' : '',
-    annualDays: annualDays < 0 || annualDays > 365 || !Number.isFinite(annualDays) ? 'Days must be 0-365' : '',
-    dailyHours: dailyHours < 0 || dailyHours > 24 || !Number.isFinite(dailyHours) ? 'Hours must be 0-24' : ''
+    age: age < 1 || age > 150 || !Number.isFinite(age) ? t('validation.invalidAge') : '',
+    annualDays: annualDays < 0 || annualDays > 365 || !Number.isFinite(annualDays) ? t('validation.invalidDays') : '',
+    dailyHours: dailyHours < 0 || dailyHours > 24 || !Number.isFinite(dailyHours) ? t('validation.invalidHours') : ''
   } as const;
 
   return (
     <div style={{ fontFamily: 'system-ui, -apple-system, Segoe UI, Roboto, sans-serif', padding: 24, maxWidth: 720, margin: '0 auto' }}>
-      <h1 style={{ marginBottom: 8 }}>Parent Time Visualization Timer</h1>
-      <p style={{ color: '#555', marginTop: 0 }}>Static-only MVP: all calculations run in your browser.</p>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+        <h1 style={{ margin: 0 }}>{t('app.title')}</h1>
+        <button
+          onClick={toggleLanguage}
+          style={{
+            padding: '8px 16px',
+            backgroundColor: '#f0f0f0',
+            border: '1px solid #ddd',
+            borderRadius: 4,
+            cursor: 'pointer'
+          }}
+        >
+          {t('language.switch')}
+        </button>
+      </div>
+      <p style={{ color: '#555', marginTop: 0 }}>{t('app.subtitle')}</p>
 
       <section style={{ display: 'grid', gap: 12, padding: 16, border: '1px solid #e5e5e5', borderRadius: 8, marginTop: 16 }}>
-        <h2 style={{ margin: 0, fontSize: 18 }}>Input</h2>
+        <h2 style={{ margin: 0, fontSize: 18 }}>{t('parent.title')}</h2>
         <label>
-          Age:
+          {t('parent.age')}:
           <input
             aria-invalid={!!errors.age}
             type="number"
@@ -61,14 +82,14 @@ export default function App() {
           {errors.age && <span style={{ color: '#d33', marginLeft: 8 }}>{errors.age}</span>}
         </label>
         <label>
-          Gender:
+          {t('parent.gender')}:
           <select value={gender} onChange={(e) => setGender(e.target.value as 'male' | 'female')} style={{ marginLeft: 8 }}>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            <option value="male">{t('parent.male')}</option>
+            <option value="female">{t('parent.female')}</option>
           </select>
         </label>
         <label>
-          Annual Days Together:
+          {t('visitPattern.annualDays')}:
           <input
             aria-invalid={!!errors.annualDays}
             type="number"
@@ -82,7 +103,7 @@ export default function App() {
           {errors.annualDays && <span style={{ color: '#d33', marginLeft: 8 }}>{errors.annualDays}</span>}
         </label>
         <label>
-          Hours per Day:
+          {t('visitPattern.dailyHours')}:
           <input
             aria-invalid={!!errors.dailyHours}
             type="number"
@@ -98,9 +119,9 @@ export default function App() {
       </section>
 
       <section style={{ display: 'grid', gap: 12, padding: 16, border: '1px solid #e5e5e5', borderRadius: 8, marginTop: 16 }}>
-        <h2 style={{ margin: 0, fontSize: 18 }}>Preferences</h2>
+        <h2 style={{ margin: 0, fontSize: 18 }}>{t('settings.title')}</h2>
         <label>
-          Age Buffer (years):
+          {t('settings.ageBuffer')} ({t('settings.yearsUnit')}):
           <input type="number" min={0} max={10} value={prefs.ageBuffer} onChange={(e) => updateAgeBuffer(Number(e.target.value))} style={{ marginLeft: 8, width: 80 }} />
         </label>
         <label>
@@ -116,16 +137,20 @@ export default function App() {
             <option value="years_months_days">Years, Months, Days</option>
           </select>
         </label>
-        <div style={{ color: '#666' }}>Life Expectancy (2023): {gender === 'male' ? '81.09' : '87.14'} years</div>
+        <div style={{ color: '#666' }}>
+          {i18n.language === 'ja' ? '平均寿命' : 'Life Expectancy'} (2023): {gender === 'male' ? '81.09' : '87.14'} {t('results.years')}
+        </div>
       </section>
 
       <section style={{ padding: 16, border: '1px solid #e5e5e5', borderRadius: 8, marginTop: 16 }}>
-        <h2 style={{ margin: 0, fontSize: 18 }}>Result</h2>
+        <h2 style={{ margin: 0, fontSize: 18 }}>{t('results.title')}</h2>
         {errors.age || errors.annualDays || errors.dailyHours ? (
-          <div style={{ marginTop: 8, color: '#d33' }}>Please fix input errors to see the result.</div>
+          <div style={{ marginTop: 8, color: '#d33' }}>{t('results.noData')}</div>
         ) : (
           <div style={{ marginTop: 8 }}>
-            <div style={{ color: '#666', marginBottom: 6 }}>Remaining Years (raw): {result.remainingYears.toFixed(2)}</div>
+            <div style={{ color: '#666', marginBottom: 6 }}>
+              {t('results.remainingYears')}: {result.remainingYears.toFixed(2)} {t('results.years')}
+            </div>
             <TimeDisplay
               remainingYears={result.remainingYears}
               totalDays={result.totalRemainingDays}
@@ -137,7 +162,11 @@ export default function App() {
       </section>
 
       <footer style={{ marginTop: 24, color: '#777' }}>
-        <small>Source: MHLW Japan (2023). This static MVP stores preferences in your browser only.</small>
+        <small>
+          {i18n.language === 'ja'
+            ? '出典: 厚生労働省 (2023年). このアプリケーションはブラウザのみで動作します。'
+            : 'Source: MHLW Japan (2023). This static MVP stores preferences in your browser only.'}
+        </small>
       </footer>
     </div>
   );

@@ -1,0 +1,60 @@
+{
+  "app": {
+    "title": "親と過ごす時間の可視化",
+    "subtitle": "残された時間を大切に"
+  },
+  "parent": {
+    "title": "親の情報",
+    "father": "父親",
+    "mother": "母親",
+    "other": "その他",
+    "age": "年齢",
+    "gender": "性別",
+    "male": "男性",
+    "female": "女性",
+    "relationship": "関係",
+    "addParent": "親を追加",
+    "removeParent": "削除"
+  },
+  "visitPattern": {
+    "title": "訪問パターン",
+    "annualDays": "年間訪問日数",
+    "dailyHours": "1日あたりの時間",
+    "daysUnit": "日",
+    "hoursUnit": "時間",
+    "livingTogether": "同居している"
+  },
+  "settings": {
+    "title": "設定",
+    "ageBuffer": "年齢バッファ",
+    "yearsUnit": "年",
+    "customLifeExpectancy": "カスタム平均寿命",
+    "useCustom": "カスタム値を使用"
+  },
+  "results": {
+    "title": "計算結果",
+    "remainingYears": "残り年数",
+    "totalHours": "合計時間",
+    "years": "年",
+    "hours": "時間",
+    "days": "日分",
+    "noData": "データを入力してください",
+    "forParent": "{{name}}との時間"
+  },
+  "actions": {
+    "calculate": "計算する",
+    "reset": "リセット",
+    "save": "保存",
+    "load": "読み込み"
+  },
+  "validation": {
+    "required": "必須項目です",
+    "invalidAge": "有効な年齢を入力してください（0-150）",
+    "invalidDays": "有効な日数を入力してください（0-365）",
+    "invalidHours": "有効な時間を入力してください（0-24）"
+  },
+  "language": {
+    "switch": "English",
+    "current": "日本語"
+  }
+}
